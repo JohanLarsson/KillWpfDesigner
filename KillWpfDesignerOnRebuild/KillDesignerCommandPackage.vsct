@@ -56,7 +56,7 @@
         <Parent guid="guidKillDesignerCommandPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke KillDesignerCommand</ButtonText>
+          <ButtonText>Kill Wpf Designer</ButtonText>
         </Strings>
       </Button>
     </Buttons>

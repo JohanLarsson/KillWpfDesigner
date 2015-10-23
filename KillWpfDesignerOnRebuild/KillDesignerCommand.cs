@@ -12,8 +12,6 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace KillWpfDesignerOnRebuild
 {
-    using System.Diagnostics;
-
     /// <summary>
     /// Command handler
     /// </summary>
@@ -48,7 +46,7 @@ namespace KillWpfDesignerOnRebuild
 
             this.package = package;
 
-            OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -60,22 +58,12 @@ namespace KillWpfDesignerOnRebuild
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static KillDesignerCommand Instance
-        {
-            get;
-            private set;
-        }
+        public static KillDesignerCommand Instance { get; private set; }
 
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private IServiceProvider ServiceProvider
-        {
-            get
-            {
-                return this.package;
-            }
-        }
+        private IServiceProvider ServiceProvider => this.package;
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -95,22 +83,7 @@ namespace KillWpfDesignerOnRebuild
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs e)
         {
-            var designers = Process.GetProcessesByName("XDesProc");
-            foreach (var designer in designers)
-            {
-                designer.Kill();
-            }
-            //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            //string title = "KillDesignerCommand";
-
-            //// Show a message box to prove we were here
-            //VsShellUtilities.ShowMessageBox(
-            //    this.ServiceProvider,
-            //    message,
-            //    title,
-            //    OLEMSGICON.OLEMSGICON_INFO,
-            //    OLEMSGBUTTON.OLEMSGBUTTON_OK,
-            //    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            DesignerKiller.KillAll();
         }
     }
 }
