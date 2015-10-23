@@ -5,7 +5,9 @@
     <DisplayName>Kill the WPF Designer</DisplayName>
     <Description>Helper for killing the WPF designer. Kills all instances of XDesProc.exe.</Description>
     <License>License.md</License>
-    <Icon>KillDesignerCommandPackage.ico</Icon>
+    <GettingStartedGuide>https://github.com/JohanLarsson/KillWpfDesigner</GettingStartedGuide>
+    <Icon>Resources\KillDesignerCommandPackage.ico</Icon>
+    <PreviewImage>Resources\Preview.png</PreviewImage>
     <Tags>WPF Designer</Tags>
   </Metadata>
   <Installation>
