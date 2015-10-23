@@ -70,6 +70,7 @@
     </VSCTCompile>
     <Content Include="Resources\KillDesignerCommand.png" />
     <Content Include="Resources\KillDesignerCommandPackage.ico" />
+    <Content Include="Resources\skull.png" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
   <ItemGroup>
