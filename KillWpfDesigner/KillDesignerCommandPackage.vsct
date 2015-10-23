@@ -52,7 +52,7 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" priority="0x0100" type="Button">
+      <Button guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" priority="0x0900" type="Button">
         <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLSB_RUNBUILD" />
         <Icon guid="guidImages" id="pic" />
         <Strings>
