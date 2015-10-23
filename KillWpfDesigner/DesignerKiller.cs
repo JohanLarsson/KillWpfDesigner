@@ -1,4 +1,4 @@
-namespace KillWpfDesignerOnRebuild
+namespace KillWpfDesigner
 {
     using System.Diagnostics;
 

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="KillWpfDesignerOnRebuild.Company.4e540e33-6c61-4c69-aec2-976163a31af4" Version="1.0" Language="en-US" Publisher="Company" />
-    <DisplayName>KillWpfDesignerOnRebuild</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Identity Id="KillWpfDesigner.Johan Larsson.4e540e33-6c61-4c69-aec2-976163a31af4" Version="1.0" Language="en-US" Publisher="Johan Larsson" />
+    <DisplayName>Kill the WPF Designer</DisplayName>
+    <Description>Helper for killing the WPF designer. Kills all instances of XDesProc.exe.</Description>
+    <License>License.md</License>
+    <Icon>KillDesignerCommandPackage.ico</Icon>
+    <Tags>WPF Designer</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0]" />

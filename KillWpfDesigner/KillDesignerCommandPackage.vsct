@@ -56,7 +56,7 @@
         <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLSB_RUNBUILD" />
         <Icon guid="guidImages" id="pic" />
         <Strings>
-          <ButtonText>Kill Wpf Designer</ButtonText>
+          <ButtonText>Kill the WPF Designer</ButtonText>
         </Strings>
       </Button>
     </Buttons>
