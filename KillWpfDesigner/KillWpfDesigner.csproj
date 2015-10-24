@@ -60,6 +60,7 @@
     <Compile Include="Internals\GuidsAndIds.cs" />
     <Compile Include="Internals\WpfDesigner.cs" />
     <Compile Include="Internals\ServiceProviderExt.cs" />
+    <Compile Include="KillDesignerAndRebuildSolutionCommand.cs" />
     <Compile Include="KillDesignerCommand.cs" />
     <Compile Include="KillDesignerCommandPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,13 +1,15 @@
-﻿namespace KillWpfDesigner
+﻿using System;
+
+namespace KillWpfDesigner
 {
-    using System;
     using System.ComponentModel.Design;
+    using System.IO;
 
     using EnvDTE;
 
     using Microsoft.VisualStudio.Shell;
 
-    internal sealed class KillDesignerCommand : IDisposable
+    internal sealed class KillDesignerAndRebuildSolutionCommand : IDisposable
     {
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -20,7 +22,7 @@
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private KillDesignerCommand(Package package)
+        private KillDesignerAndRebuildSolutionCommand(Package package)
         {
             if (package == null)
             {
@@ -32,12 +34,11 @@
             var commandService = GetService<IMenuCommandService>();
             if (commandService != null)
             {
-                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerCommandId)
+                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId)
                 {
                     Visible = false
                 };
                 commandService.AddCommand(_menuItem);
-                UpdateVisibility();
                 var service = GetService<DTE>();
                 service.Events.SolutionEvents.AfterClosing += UpdateVisibility;
                 service.Events.SolutionEvents.Opened += UpdateVisibility;
@@ -47,7 +48,18 @@
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static KillDesignerCommand Instance { get; private set; }
+        public static KillDesignerAndRebuildSolutionCommand Instance { get; private set; }
+
+        private Command RebuildSolutionCommand
+        {
+            get
+            {
+                var service = GetService<DTE>();
+                var commands = service.Commands;
+                var command = commands.Item("Build.RebuildSolution");
+                return command;
+            }
+        }
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -55,12 +67,7 @@
         /// <param name="package">Owner package, not null.</param>
         public static void Initialize(Package package)
         {
-            Instance = new KillDesignerCommand(package);
-        }
-
-        public T GetService<T>() where T : class 
-        {
-            return _package.GetService<T>();
+            Instance = new KillDesignerAndRebuildSolutionCommand(package);
         }
 
         public void Dispose()
@@ -70,23 +77,35 @@
             service.Events.SolutionEvents.Opened -= UpdateVisibility;
         }
 
-        /// <summary>
-        /// This function is the callback used to execute the command when the menu item is clicked.
-        /// See the constructor to see how the menu item is associated with this function using
-        /// OleMenuCommandService service and MenuCommand class.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event args.</param>
+        public T GetService<T>() where T : class
+        {
+            return _package.GetService<T>();
+        }
+
         private void Execute(object sender, EventArgs e)
         {
-            WpfDesigner.KillAll();
+            _menuItem.Enabled = false;
+            try
+            {
+                WpfDesigner.KillAll();
+                var command = RebuildSolutionCommand;
+                object customIn = null;
+                object customOut = null;
+                var service = GetService<DTE>();
+                var commands = service.Commands;
+                commands.Raise(command.Guid, command.ID, ref customIn, ref customOut);
+            }
+            finally
+            {
+                _menuItem.Enabled = true;
+            }
         }
 
         private void UpdateVisibility()
         {
             var service = GetService<DTE>();
             var solution = service.Solution;
-            if (solution == null || solution.Projects.Count == 0)
+            if (solution == null || !solution.IsOpen)
             {
                 _menuItem.Visible = false;
                 return;

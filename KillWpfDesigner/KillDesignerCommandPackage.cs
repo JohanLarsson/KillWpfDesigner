@@ -48,6 +48,7 @@
         protected override void Initialize()
         {
             KillDesignerCommand.Initialize(this);
+            KillDesignerAndRebuildSolutionCommand.Initialize(this);
             base.Initialize();
         }
     }

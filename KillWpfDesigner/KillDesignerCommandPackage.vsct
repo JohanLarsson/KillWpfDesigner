@@ -51,6 +51,15 @@
           <ButtonText>Kill the WPF Designer</ButtonText>
         </Strings>
       </Button>
+
+      <Button guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerAndRebuildSolutionCommandId" type="Button">
+        <Icon guid="guidImages" id="skull" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Kill Designer and Rebuild Solution</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -65,8 +74,16 @@
   </Commands>
 
   <CommandPlacements>
-    <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" priority="0x0900">
+    <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" priority="0x0601">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLSB_RUNBUILD"/>
+    </CommandPlacement>
+
+    <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerAndRebuildSolutionCommandId" priority="0x0201">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_BUILD_SOLUTION"/>
+    </CommandPlacement>
+
+    <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerAndRebuildSolutionCommandId" priority="0x0201">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_SOLUTION_BUILD"/>
     </CommandPlacement>
   </CommandPlacements>
   
@@ -77,6 +94,7 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidKillDesignerCommandPackageCmdSet" value="{e72de556-6b14-45d5-a92f-86185351617b}">
       <IDSymbol name="KillDesignerCommandId" value="1" />
+      <IDSymbol name="KillDesignerAndRebuildSolutionCommandId" value="2" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{19601113-d97f-4ac6-a1f7-844c4d0697ea}" >
