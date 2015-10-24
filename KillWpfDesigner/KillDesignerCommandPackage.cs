@@ -1,4 +1,6 @@
-﻿namespace KillWpfDesigner
+﻿using System;
+
+namespace KillWpfDesigner
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
@@ -28,8 +30,11 @@
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(GuidsAndIds.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class KillDesignerCommandPackage : Package
+    public sealed class KillDesignerCommandPackage : Package, IDisposable
     {
+        private KillDesignerCommand _killDesignerCommand;
+        private KillDesignerAndRebuildSolutionCommand _killDesignerAndRebuildSolutionCommand;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
         /// </summary>
@@ -41,14 +46,20 @@
             // initialization is the Initialize method.
         }
 
+        public void Dispose()
+        {
+            _killDesignerCommand?.Dispose();
+            _killDesignerAndRebuildSolutionCommand?.Dispose();
+        }
+
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
         /// </summary>
         protected override void Initialize()
         {
-            KillDesignerCommand.Initialize(this);
-            KillDesignerAndRebuildSolutionCommand.Initialize(this);
+            _killDesignerCommand = new KillDesignerCommand(this);
+            _killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
             base.Initialize();
         }
     }

@@ -20,7 +20,7 @@
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private KillDesignerCommand(Package package)
+        internal KillDesignerCommand(Package package)
         {
             if (package == null)
             {
@@ -44,20 +44,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets the instance of the command.
-        /// </summary>
-        public static KillDesignerCommand Instance { get; private set; }
-
-        /// <summary>
-        /// Initializes the singleton instance of the command.
-        /// </summary>
-        /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(Package package)
-        {
-            Instance = new KillDesignerCommand(package);
-        }
-
         public T GetService<T>() where T : class 
         {
             return _package.GetService<T>();
@@ -65,9 +51,9 @@
 
         public void Dispose()
         {
-            var service = GetService<DTE>();
-            service.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
-            service.Events.SolutionEvents.Opened -= UpdateVisibility;
+            var dte = GetService<DTE>();
+            dte.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
+            dte.Events.SolutionEvents.Opened -= UpdateVisibility;
         }
 
         /// <summary>
@@ -84,8 +70,8 @@
 
         private void UpdateVisibility()
         {
-            var service = GetService<DTE>();
-            var solution = service.Solution;
+            var dte = GetService<DTE>();
+            var solution = dte.Solution;
             if (solution == null || solution.Projects.Count == 0)
             {
                 _menuItem.Visible = false;

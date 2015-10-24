@@ -1,12 +1,8 @@
-﻿using System;
-
-namespace KillWpfDesigner
+﻿namespace KillWpfDesigner
 {
+    using System;
     using System.ComponentModel.Design;
-    using System.IO;
-
     using EnvDTE;
-
     using Microsoft.VisualStudio.Shell;
 
     internal sealed class KillDesignerAndRebuildSolutionCommand : IDisposable
@@ -22,7 +18,7 @@ namespace KillWpfDesigner
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private KillDesignerAndRebuildSolutionCommand(Package package)
+        internal KillDesignerAndRebuildSolutionCommand(Package package)
         {
             if (package == null)
             {
@@ -45,36 +41,22 @@ namespace KillWpfDesigner
             }
         }
 
-        /// <summary>
-        /// Gets the instance of the command.
-        /// </summary>
-        public static KillDesignerAndRebuildSolutionCommand Instance { get; private set; }
-
         private Command RebuildSolutionCommand
         {
             get
             {
-                var service = GetService<DTE>();
-                var commands = service.Commands;
+                var dte = GetService<DTE>();
+                var commands = dte.Commands;
                 var command = commands.Item("Build.RebuildSolution");
                 return command;
             }
         }
 
-        /// <summary>
-        /// Initializes the singleton instance of the command.
-        /// </summary>
-        /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(Package package)
-        {
-            Instance = new KillDesignerAndRebuildSolutionCommand(package);
-        }
-
         public void Dispose()
         {
-            var service = GetService<DTE>();
-            service.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
-            service.Events.SolutionEvents.Opened -= UpdateVisibility;
+            var dte = GetService<DTE>();
+            dte.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
+            dte.Events.SolutionEvents.Opened -= UpdateVisibility;
         }
 
         public T GetService<T>() where T : class
