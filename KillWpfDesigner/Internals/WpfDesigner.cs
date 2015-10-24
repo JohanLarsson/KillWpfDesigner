@@ -2,9 +2,9 @@ namespace KillWpfDesigner
 {
     using System.Diagnostics;
 
-    public static class DesignerKiller
+    internal static class WpfDesigner
     {
-        public static void KillAll()
+        internal static void KillAll()
         {
             var designers = Process.GetProcessesByName("XDesProc");
             foreach (var designer in designers)

@@ -1,21 +1,14 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="KillDesignerCommand.cs" company="Company">
-//     Copyright (c) Company.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 
 namespace KillWpfDesigner
 {
-    /// <summary>
-    /// Command handler
-    /// </summary>
-    internal sealed class KillDesignerCommand
+    using EnvDTE;
+
+    using Debugger = System.Diagnostics.Debugger;
+
+    internal sealed class KillDesignerCommand : IDisposable
     {
         /// <summary>
         /// Command ID.
@@ -30,7 +23,9 @@ namespace KillWpfDesigner
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly Package package;
+        private readonly Package _package;
+
+        private readonly MenuCommand _menuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
@@ -44,14 +39,21 @@ namespace KillWpfDesigner
                 throw new ArgumentNullException("package");
             }
 
-            this.package = package;
+            this._package = package;
 
             var commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
                 var menuCommandID = new CommandID(CommandSet, CommandId);
-                var menuItem = new MenuCommand(this.MenuItemCallback, menuCommandID);
-                commandService.AddCommand(menuItem);
+                _menuItem = new MenuCommand(this.Execute, menuCommandID)
+                {
+                    Visible = false
+                };
+                commandService.AddCommand(_menuItem);
+                UpdateVisibility();
+                var service = ServiceProvider.GetService<DTE>();
+                service.Events.SolutionEvents.AfterClosing += UpdateVisibility;
+                service.Events.SolutionEvents.Opened += UpdateVisibility;
             }
         }
 
@@ -63,7 +65,7 @@ namespace KillWpfDesigner
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private IServiceProvider ServiceProvider => this.package;
+        private IServiceProvider ServiceProvider => this._package;
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -74,6 +76,13 @@ namespace KillWpfDesigner
             Instance = new KillDesignerCommand(package);
         }
 
+        public void Dispose()
+        {
+            var service = ServiceProvider.GetService<DTE>();
+            service.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
+            service.Events.SolutionEvents.Opened -= UpdateVisibility;
+        }
+
         /// <summary>
         /// This function is the callback used to execute the command when the menu item is clicked.
         /// See the constructor to see how the menu item is associated with this function using
@@ -81,9 +90,22 @@ namespace KillWpfDesigner
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
-        private void MenuItemCallback(object sender, EventArgs e)
+        private void Execute(object sender, EventArgs e)
         {
-            DesignerKiller.KillAll();
+            WpfDesigner.KillAll();
+        }
+
+        private void UpdateVisibility()
+        {
+            var service = ServiceProvider.GetService<DTE>();
+            var solution = service.Solution;
+            if (solution == null || solution.Projects.Count == 0)
+            {
+                _menuItem.Visible = false;
+                return;
+            }
+
+            _menuItem.Visible = true; // Check if it is a WPF s
         }
     }
 }

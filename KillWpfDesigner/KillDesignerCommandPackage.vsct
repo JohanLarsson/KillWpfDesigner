@@ -52,9 +52,11 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" priority="0x0900" type="Button">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLSB_RUNBUILD" />
+      <Button guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" type="Button">
         <Icon guid="guidImages" id="skull" />
+        <CommandFlag>AllowVisibilityChangeOnToolBar</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <ButtonText>Kill the WPF Designer</ButtonText>
         </Strings>
@@ -72,6 +74,12 @@
     </Bitmaps>
   </Commands>
 
+  <CommandPlacements>
+    <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" priority="0x0900">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLSB_RUNBUILD"/>
+    </CommandPlacement>
+  </CommandPlacements>
+  
   <Symbols>
     <!-- This is the package guid. -->
     <GuidSymbol name="guidKillDesignerCommandPackage" value="{9d0d660c-aad6-44c2-822b-33f00e79d0eb}" />
