@@ -1,3 +1,10 @@
+using System.ComponentModel.Design;
+using EnvDTE;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using Debugger = System.Diagnostics.Debugger;
+
 namespace KillWpfDesigner
 {
     using System;

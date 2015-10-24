@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 
 namespace KillWpfDesigner
 {
@@ -36,7 +37,7 @@ namespace KillWpfDesigner
         private KillDesignerAndRebuildSolutionCommand _killDesignerAndRebuildSolutionCommand;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
+        /// Initializes a new instance of the <see cref="KillDesignerCommandPackage"/> class.
         /// </summary>
         public KillDesignerCommandPackage()
         {
