@@ -1,12 +1,9 @@
 ﻿namespace KillWpfDesigner
 {
-    using System;
-    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
 
     using Microsoft.VisualStudio.Shell;
-    using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -29,15 +26,10 @@
     [ProvideAutoLoad(Microsoft.VisualStudio.Shell.Interop.UIContextGuids80.SolutionExists)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(KillDesignerCommandPackage.PackageGuidString)]
+    [Guid(GuidsAndIds.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class KillDesignerCommandPackage : Package
     {
-        /// <summary>
-        /// KillDesignerCommandPackage GUID string.
-        /// </summary>
-        public const string PackageGuidString = "9d0d660c-aad6-44c2-822b-33f00e79d0eb";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
         /// </summary>

@@ -1,30 +1,18 @@
-﻿using System;
-using System.ComponentModel.Design;
-using Microsoft.VisualStudio.Shell;
-
-namespace KillWpfDesigner
+﻿namespace KillWpfDesigner
 {
+    using System;
+    using System.ComponentModel.Design;
+
     using EnvDTE;
 
-    using Debugger = System.Diagnostics.Debugger;
+    using Microsoft.VisualStudio.Shell;
 
     internal sealed class KillDesignerCommand : IDisposable
     {
         /// <summary>
-        /// Command ID.
-        /// </summary>
-        public const int CommandId = 0x0100;
-
-        /// <summary>
-        /// Command menu group (command set GUID).
-        /// </summary>
-        public static readonly Guid CommandSet = new Guid("e72de556-6b14-45d5-a92f-86185351617b");
-
-        /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
         private readonly Package _package;
-
         private readonly MenuCommand _menuItem;
 
         /// <summary>
@@ -39,13 +27,13 @@ namespace KillWpfDesigner
                 throw new ArgumentNullException("package");
             }
 
-            this._package = package;
+            _package = package;
 
-            var commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var commandService = ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
-                var menuCommandID = new CommandID(CommandSet, CommandId);
-                _menuItem = new MenuCommand(this.Execute, menuCommandID)
+                var menuCommandID = new CommandID(GuidsAndIds.CommandSet, GuidsAndIds.KillDesignerCommandId);
+                _menuItem = new MenuCommand(Execute, menuCommandID)
                 {
                     Visible = false
                 };
@@ -65,7 +53,7 @@ namespace KillWpfDesigner
         /// <summary>
         /// Gets the service provider from the owner package.
         /// </summary>
-        private IServiceProvider ServiceProvider => this._package;
+        private IServiceProvider ServiceProvider => _package;
 
         /// <summary>
         /// Initializes the singleton instance of the command.

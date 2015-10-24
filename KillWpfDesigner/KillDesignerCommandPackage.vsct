@@ -31,16 +31,6 @@
     group; your package should define its own command set in order to avoid collisions
     with command ids defined by other packages. -->
 
-    <!-- In this section you can define new menu groups. A menu group is a container for
-         other menus or buttons (commands); from a visual point of view you can see the
-         group as the part of a menu contained between two lines. The parent of a group
-         must be a menu. -->
-    <!--<Groups>
-      <Group guid="guidKillDesignerCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLSB_RUNBUILD"/>
-      </Group>
-    </Groups>-->
-
     <!--Buttons section. -->
     <!--This section defines the elements the user can interact with, like a menu command or a button
         or combo box in a toolbar. -->
@@ -86,7 +76,7 @@
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidKillDesignerCommandPackageCmdSet" value="{e72de556-6b14-45d5-a92f-86185351617b}">
-      <IDSymbol name="KillDesignerCommandId" value="0x0100" />
+      <IDSymbol name="KillDesignerCommandId" value="1" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{19601113-d97f-4ac6-a1f7-844c4d0697ea}" >
