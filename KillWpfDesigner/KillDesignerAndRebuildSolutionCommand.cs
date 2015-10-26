@@ -9,12 +9,14 @@
 
     internal sealed class KillDesignerAndRebuildSolutionCommand : IDisposable
     {
+        private static readonly string GuidVsStandardCommandSet97 = VSConstants.GUID_VSStandardCommandSet97.ToString("B");
+
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
         private readonly Package _package;
         private readonly MenuCommand _menuItem;
-        private static readonly string GuidVsStandardCommandSet97 = VSConstants.GUID_VSStandardCommandSet97.ToString("B");
+        private readonly CommandEvents _rebuildSlnEvents;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
@@ -36,9 +38,9 @@
                 _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId);
                 commandService.AddCommand(_menuItem);
                 var dte = GetService<DTE>();
-                var commandEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
-                commandEvents.BeforeExecute += OnBeforeExecuteRebuildSln;
-                commandEvents.AfterExecute += OnAfterExecuteRebuildSln;
+                _rebuildSlnEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
+                _rebuildSlnEvents.BeforeExecute += OnBeforeExecuteRebuildSln;
+                _rebuildSlnEvents.AfterExecute += OnAfterExecuteRebuildSln;
                 dte.Events.SolutionEvents.AfterClosing += UpdateVisibility;
                 dte.Events.SolutionEvents.Opened += UpdateVisibility;
                 UpdateVisibility();
@@ -50,9 +52,8 @@
             var dte = GetService<DTE>();
             dte.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
             dte.Events.SolutionEvents.Opened -= UpdateVisibility;
-            var commandEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
-            commandEvents.BeforeExecute -= OnBeforeExecuteRebuildSln;
-            commandEvents.AfterExecute -= OnAfterExecuteRebuildSln;
+            _rebuildSlnEvents.BeforeExecute -= OnBeforeExecuteRebuildSln;
+            _rebuildSlnEvents.AfterExecute -= OnAfterExecuteRebuildSln;
         }
 
         public T GetService<T>() where T : class

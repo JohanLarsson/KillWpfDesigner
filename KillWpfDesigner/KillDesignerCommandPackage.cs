@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel.Design;
-
-namespace KillWpfDesigner
+﻿namespace KillWpfDesigner
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
 
