@@ -20,7 +20,7 @@ namespace KillWpfDesigner
                 return false;
             }
 
-            return true; // TODO check it the solution is a WPF solution?
+            return true; // TODO check if the solution is a WPF solution?
         }
     }
 }

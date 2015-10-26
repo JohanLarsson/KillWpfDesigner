@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="KillWpfDesigner..4e540e33-6c61-4c69-aec2-976163a31af4" Version="1.0.2" Language="en-US" Publisher="Johan Larsson" />
+    <Identity Id="KillWpfDesigner..4e540e33-6c61-4c69-aec2-976163a31af4" Version="1.0.3" Language="en-US" Publisher="Johan Larsson" />
     <DisplayName>Kill the WPF Designer</DisplayName>
     <Description>Helper for killing the WPF designer. Kills all instances of XDesProc.exe.</Description>
     <License>License.txt</License>
