@@ -1,17 +1,17 @@
-﻿namespace KillWpfDesigner.Internals
+﻿namespace KillWpfDesigner
 {
     using System;
     using System.CodeDom.Compiler;
-    using System.Diagnostics;
     using System.IO;
     using System.Text;
+
     using EnvDTE;
+
     using Microsoft.VisualStudio.CommandBars;
-    using Debugger = System.Diagnostics.Debugger;
 
     public static class DumpCommandBars
     {
-        public static void Dump(IServiceProvider provider)
+        public static string Dump(IServiceProvider provider)
         {
             var dte = provider.GetService<DTE>();
             var commandBars = (CommandBars)dte.CommandBars;
@@ -23,19 +23,16 @@
                 var bar = item as CommandBar;
                 if (bar != null)
                 {
-                    writer.WriteLine($"CommandBar: {bar.Name}");
+                    WriteInfo(bar, writer);
                     writer.Indent++;
                     Dump(bar.Controls, writer);
                     writer.Indent--;
                     continue;
                 }
-                else
-                {
-                    Dump((CommandBarControl) item, writer);
-                }
+                WriteInfo((CommandBarControl)item, writer);
             }
-            var s = sb.ToString();
-            var commandBar = commandBars["Rebuild Solution"];
+            var info = sb.ToString();
+            return info;
         }
 
         private static void Dump(CommandBarControls controls, IndentedTextWriter writer)
@@ -45,7 +42,7 @@
                 var bar = item as CommandBar;
                 if (bar != null)
                 {
-                    writer.WriteLine($"CommandBar: {bar.Name}");
+                    WriteInfo(bar, writer);
                     writer.Indent++;
                     Dump(bar.Controls, writer);
                     writer.Indent--;
@@ -54,22 +51,35 @@
                 var popup = item as CommandBarPopup;
                 if (popup != null)
                 {
-                    writer.WriteLine($"Popup: {popup.Caption}");
+                    WriteInfo(popup, writer);
                     writer.Indent++;
                     Dump(popup.Controls, writer);
                     writer.Indent--;
                     continue;
                 }
-                else
-                {
-                    Dump((CommandBarControl)item, writer);
-                }
+                WriteInfo((CommandBarControl)item, writer);
             }
         }
 
-        private static void Dump(CommandBarControl control, IndentedTextWriter writer)
+        private static void WriteInfo(CommandBarControl control, IndentedTextWriter writer)
         {
-            writer.WriteLine($"{control.Type}: {control.Caption}");
+            var propertyInfo = control.GetType()
+                                               .GetProperty("Controls");
+            if (propertyInfo != null)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+            writer.WriteLine($"{control.Type}: {control.Caption} Id:{control.Id} Index: {control.Index} BuiltIn: {control.BuiltIn} Prio: {control.Priority}");
+        }
+
+        private static void WriteInfo(CommandBar bar, IndentedTextWriter writer)
+        {
+            writer.WriteLine($"{bar.Type}: {bar.Name} Id:{bar.Id} Index: {bar.Index} BuiltIn: {bar.BuiltIn}");
+        }
+
+        private static void WriteInfo(CommandBarPopup popup, IndentedTextWriter writer)
+        {
+            writer.WriteLine($"{popup.Type}: {popup.Caption} Id:{popup.Id} Index: {popup.Index} BuiltIn: {popup.BuiltIn} Prio: {popup.Priority}");
         }
     }
 }
