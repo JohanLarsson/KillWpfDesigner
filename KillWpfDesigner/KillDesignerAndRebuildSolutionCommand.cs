@@ -33,10 +33,7 @@
             var commandService = GetService<IMenuCommandService>();
             if (commandService != null)
             {
-                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId)
-                {
-                    Visible = false
-                };
+                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId);
                 commandService.AddCommand(_menuItem);
                 var dte = GetService<DTE>();
                 var commandEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
@@ -44,6 +41,7 @@
                 commandEvents.AfterExecute += OnAfterExecuteRebuildSln;
                 dte.Events.SolutionEvents.AfterClosing += UpdateVisibility;
                 dte.Events.SolutionEvents.Opened += UpdateVisibility;
+                UpdateVisibility();
             }
         }
 
@@ -52,6 +50,9 @@
             var dte = GetService<DTE>();
             dte.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
             dte.Events.SolutionEvents.Opened -= UpdateVisibility;
+            var commandEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
+            commandEvents.BeforeExecute -= OnBeforeExecuteRebuildSln;
+            commandEvents.AfterExecute -= OnAfterExecuteRebuildSln;
         }
 
         public T GetService<T>() where T : class
