@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.Design;
-
-namespace KillWpfDesigner
+﻿namespace KillWpfDesigner
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
-
+    using Internals;
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -26,7 +25,7 @@ namespace KillWpfDesigner
     /// </para>
     /// </remarks>
     [PackageRegistration(UseManagedResourcesOnly = true)]
-    [ProvideAutoLoad(Microsoft.VisualStudio.Shell.Interop.UIContextGuids80.SolutionExists)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(GuidsAndIds.PackageGuidString)]
@@ -59,6 +58,7 @@ namespace KillWpfDesigner
         /// </summary>
         protected override void Initialize()
         {
+            DumpCommandBars.Dump(this);
             _killDesignerCommand = new KillDesignerCommand(this);
             _killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
             base.Initialize();

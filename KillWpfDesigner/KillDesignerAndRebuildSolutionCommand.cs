@@ -1,10 +1,12 @@
-﻿using Microsoft.VisualStudio;
-
-namespace KillWpfDesigner
+﻿namespace KillWpfDesigner
 {
     using System;
     using System.ComponentModel.Design;
+    using System.Diagnostics;
+    using System.Linq;
     using EnvDTE;
+    using Microsoft.VisualStudio;
+    using Microsoft.VisualStudio.CommandBars;
     using Microsoft.VisualStudio.Shell;
 
     internal sealed class KillDesignerAndRebuildSolutionCommand : IDisposable
