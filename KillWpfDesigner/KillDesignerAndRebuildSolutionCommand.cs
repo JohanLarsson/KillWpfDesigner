@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio;
-
-namespace KillWpfDesigner
+﻿namespace KillWpfDesigner
 {
     using System;
     using System.ComponentModel.Design;
     using EnvDTE;
+
+    using Microsoft.VisualStudio;
     using Microsoft.VisualStudio.Shell;
 
     internal sealed class KillDesignerAndRebuildSolutionCommand : IDisposable
@@ -85,7 +85,7 @@ namespace KillWpfDesigner
             _menuItem.Enabled = false;
         }
 
-        private void OnAfterExecuteRebuildSln(string Guid, int ID, object CustomIn, object CustomOut)
+        private void OnAfterExecuteRebuildSln(string guid, int id, object customIn, object customOut)
         {
             _menuItem.Enabled = true;
         }
