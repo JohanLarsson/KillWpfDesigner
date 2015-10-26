@@ -32,12 +32,10 @@
             var commandService = GetService<IMenuCommandService>();
             if (commandService != null)
             {
-                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerCommandId)
-                {
-                    Visible = false
-                };
-                commandService.AddCommand(_menuItem);
+                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerCommandId);
                 UpdateVisibility();
+                commandService.AddCommand(_menuItem);
+
                 var service = GetService<DTE>();
                 service.Events.SolutionEvents.AfterClosing += UpdateVisibility;
                 service.Events.SolutionEvents.Opened += UpdateVisibility;
@@ -70,15 +68,7 @@
 
         private void UpdateVisibility()
         {
-            var dte = GetService<DTE>();
-            var solution = dte.Solution;
-            if (solution == null || solution.Projects.Count == 0)
-            {
-                _menuItem.Visible = false;
-                return;
-            }
-
-            _menuItem.Visible = true; // Check if it is a WPF s
+            _menuItem.Visible = _package.HasOpenWpfSolution();
         }
     }
 }

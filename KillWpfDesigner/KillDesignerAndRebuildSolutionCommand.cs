@@ -36,14 +36,16 @@
             if (commandService != null)
             {
                 _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId);
+                UpdateVisibility();
                 commandService.AddCommand(_menuItem);
+
                 var dte = GetService<DTE>();
                 _rebuildSlnEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
                 _rebuildSlnEvents.BeforeExecute += OnBeforeExecuteRebuildSln;
                 _rebuildSlnEvents.AfterExecute += OnAfterExecuteRebuildSln;
+
                 dte.Events.SolutionEvents.AfterClosing += UpdateVisibility;
                 dte.Events.SolutionEvents.Opened += UpdateVisibility;
-                UpdateVisibility();
             }
         }
 
@@ -71,15 +73,7 @@
 
         private void UpdateVisibility()
         {
-            var service = GetService<DTE>();
-            var solution = service.Solution;
-            if (solution == null || !solution.IsOpen)
-            {
-                _menuItem.Visible = false;
-                return;
-            }
-
-            _menuItem.Visible = true; // Check if it is a WPF s
+            _menuItem.Visible = _package.HasOpenWpfSolution();
         }
 
         private void OnBeforeExecuteRebuildSln(string guid, int id, object customIn, object customOut, ref bool cancelDefault)

@@ -58,6 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Internals\GuidsAndIds.cs" />
+    <Compile Include="Internals\SolutionExt.cs" />
     <Compile Include="Internals\WpfDesigner.cs" />
     <Compile Include="Internals\ServiceProviderExt.cs" />
     <Compile Include="KillDesignerAndRebuildSolutionCommand.cs" />
