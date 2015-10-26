@@ -58,6 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Internals\DumpCommandBars.cs" />
+    <Compile Include="Internals\DumpCommands.cs" />
     <Compile Include="Internals\GuidsAndIds.cs" />
     <Compile Include="Internals\WpfDesigner.cs" />
     <Compile Include="Internals\ServiceProviderExt.cs" />

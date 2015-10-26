@@ -58,6 +58,7 @@
         /// </summary>
         protected override void Initialize()
         {
+            DumpCommands.Dump(this);
             DumpCommandBars.Dump(this);
             _killDesignerCommand = new KillDesignerCommand(this);
             _killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
