@@ -12,8 +12,8 @@
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly Package _package;
-        private readonly MenuCommand _menuItem;
+        private readonly Package package;
+        private readonly MenuCommand menuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
@@ -22,36 +22,31 @@
         /// <param name="package">Owner package, not null.</param>
         internal KillDesignerCommand(Package package)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
-
-            _package = package;
-
-            var commandService = GetService<IMenuCommandService>();
+            this.package = package ?? throw new ArgumentNullException("package");
+            var commandService = this.GetService<IMenuCommandService>();
             if (commandService != null)
             {
-                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerCommandId);
-                UpdateVisibility();
-                commandService.AddCommand(_menuItem);
+                this.menuItem = new MenuCommand(this.Execute, GuidsAndIds.KillDesignerCommandId);
+                this.UpdateVisibility();
+                commandService.AddCommand(this.menuItem);
 
-                var service = GetService<DTE>();
-                service.Events.SolutionEvents.AfterClosing += UpdateVisibility;
-                service.Events.SolutionEvents.Opened += UpdateVisibility;
+                var service = this.GetService<DTE>();
+                service.Events.SolutionEvents.AfterClosing += this.UpdateVisibility;
+                service.Events.SolutionEvents.Opened += this.UpdateVisibility;
             }
         }
 
-        public T GetService<T>() where T : class 
+        public T GetService<T>()
+            where T : class
         {
-            return _package.GetService<T>();
+            return this.package.GetService<T>();
         }
 
         public void Dispose()
         {
-            var dte = GetService<DTE>();
-            dte.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
-            dte.Events.SolutionEvents.Opened -= UpdateVisibility;
+            var dte = this.GetService<DTE>();
+            dte.Events.SolutionEvents.AfterClosing -= this.UpdateVisibility;
+            dte.Events.SolutionEvents.Opened -= this.UpdateVisibility;
         }
 
         /// <summary>
@@ -68,7 +63,7 @@
 
         private void UpdateVisibility()
         {
-            _menuItem.Visible = _package.HasOpenWpfSolution();
+            this.menuItem.Visible = this.package.HasOpenWpfSolution();
         }
     }
 }

@@ -5,10 +5,6 @@
 
     internal static class GuidsAndIds
     {
-        private const int _KillDesignerCommandId = 1;
-
-        private const int _KillDesignerAndRebuildSolutionCommandId = 2;
-
         /// <summary>
         /// KillDesignerCommandPackage GUID string.
         /// </summary>
@@ -17,9 +13,9 @@
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        private static readonly Guid CommandSet = new Guid("e72de556-6b14-45d5-a92f-86185351617b");
+        public static readonly Guid CommandSet = new Guid("e72de556-6b14-45d5-a92f-86185351617b");
 
-        public static readonly CommandID KillDesignerCommandId = new CommandID(CommandSet, _KillDesignerCommandId);
-        public static readonly CommandID KillDesignerAndRebuildSolutionCommandId = new CommandID(CommandSet, _KillDesignerAndRebuildSolutionCommandId);
+        public static readonly CommandID KillDesignerCommandId = new CommandID(CommandSet, 1);
+        public static readonly CommandID KillDesignerAndRebuildSolutionCommandId = new CommandID(CommandSet, 2);
     }
 }

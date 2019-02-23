@@ -14,9 +14,9 @@
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
-        private readonly Package _package;
-        private readonly MenuCommand _menuItem;
-        private readonly CommandEvents _rebuildSlnEvents;
+        private readonly Package package;
+        private readonly MenuCommand menuItem;
+        private readonly CommandEvents rebuildSlnEvents;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
@@ -25,65 +25,60 @@
         /// <param name="package">Owner package, not null.</param>
         internal KillDesignerAndRebuildSolutionCommand(Package package)
         {
-            if (package == null)
-            {
-                throw new ArgumentNullException("package");
-            }
-
-            _package = package;
-
-            var commandService = GetService<IMenuCommandService>();
+            this.package = package ?? throw new ArgumentNullException("package");
+            var commandService = this.GetService<IMenuCommandService>();
             if (commandService != null)
             {
-                _menuItem = new MenuCommand(Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId);
-                UpdateVisibility();
-                commandService.AddCommand(_menuItem);
+                this.menuItem = new MenuCommand(this.Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId);
+                this.UpdateVisibility();
+                commandService.AddCommand(this.menuItem);
 
-                var dte = GetService<DTE>();
-                _rebuildSlnEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
-                _rebuildSlnEvents.BeforeExecute += OnBeforeExecuteRebuildSln;
-                _rebuildSlnEvents.AfterExecute += OnAfterExecuteRebuildSln;
+                var dte = this.GetService<DTE>();
+                this.rebuildSlnEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
+                this.rebuildSlnEvents.BeforeExecute += this.OnBeforeExecuteRebuildSln;
+                this.rebuildSlnEvents.AfterExecute += this.OnAfterExecuteRebuildSln;
 
-                dte.Events.SolutionEvents.AfterClosing += UpdateVisibility;
-                dte.Events.SolutionEvents.Opened += UpdateVisibility;
+                dte.Events.SolutionEvents.AfterClosing += this.UpdateVisibility;
+                dte.Events.SolutionEvents.Opened += this.UpdateVisibility;
             }
         }
 
         public void Dispose()
         {
-            var dte = GetService<DTE>();
-            dte.Events.SolutionEvents.AfterClosing -= UpdateVisibility;
-            dte.Events.SolutionEvents.Opened -= UpdateVisibility;
-            _rebuildSlnEvents.BeforeExecute -= OnBeforeExecuteRebuildSln;
-            _rebuildSlnEvents.AfterExecute -= OnAfterExecuteRebuildSln;
+            var dte = this.GetService<DTE>();
+            dte.Events.SolutionEvents.AfterClosing -= this.UpdateVisibility;
+            dte.Events.SolutionEvents.Opened -= this.UpdateVisibility;
+            this.rebuildSlnEvents.BeforeExecute -= this.OnBeforeExecuteRebuildSln;
+            this.rebuildSlnEvents.AfterExecute -= this.OnAfterExecuteRebuildSln;
         }
 
-        public T GetService<T>() where T : class
+        public T GetService<T>()
+            where T : class
         {
-            return _package.GetService<T>();
+            return this.package.GetService<T>();
         }
 
         private void Execute(object sender, EventArgs e)
         {
-            _menuItem.Enabled = false;
+            this.menuItem.Enabled = false;
             WpfDesigner.KillAll();
-            var dte = GetService<DTE>();
+            var dte = this.GetService<DTE>();
             dte.ExecuteCommand("Build.RebuildSolution");
         }
 
         private void UpdateVisibility()
         {
-            _menuItem.Visible = _package.HasOpenWpfSolution();
+            this.menuItem.Visible = this.package.HasOpenWpfSolution();
         }
 
         private void OnBeforeExecuteRebuildSln(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
         {
-            _menuItem.Enabled = false;
+            this.menuItem.Enabled = false;
         }
 
         private void OnAfterExecuteRebuildSln(string guid, int id, object customIn, object customOut)
         {
-            _menuItem.Enabled = true;
+            this.menuItem.Enabled = true;
         }
     }
 }

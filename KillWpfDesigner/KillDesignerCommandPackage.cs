@@ -31,8 +31,8 @@
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class KillDesignerCommandPackage : Package, IDisposable
     {
-        private KillDesignerCommand _killDesignerCommand;
-        private KillDesignerAndRebuildSolutionCommand _killDesignerAndRebuildSolutionCommand;
+        private KillDesignerCommand killDesignerCommand;
+        private KillDesignerAndRebuildSolutionCommand killDesignerAndRebuildSolutionCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommandPackage"/> class.
@@ -47,8 +47,8 @@
 
         public void Dispose()
         {
-            _killDesignerCommand?.Dispose();
-            _killDesignerAndRebuildSolutionCommand?.Dispose();
+            this.killDesignerCommand?.Dispose();
+            this.killDesignerAndRebuildSolutionCommand?.Dispose();
         }
 
         /// <summary>
@@ -57,8 +57,8 @@
         /// </summary>
         protected override void Initialize()
         {
-            _killDesignerCommand = new KillDesignerCommand(this);
-            _killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
+            this.killDesignerCommand = new KillDesignerCommand(this);
+            this.killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
             base.Initialize();
         }
     }
