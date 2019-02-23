@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="KillWpfDesigner..4e540e33-6c61-4c69-aec2-976163a31af4" Version="1.0.4" Language="en-US" Publisher="Johan Larsson" />
-    <DisplayName>Kill the WPF Designer</DisplayName>
-    <Description>Helper for killing the WPF designer. Kills all instances of XDesProc.exe.</Description>
-    <License>LICENSE</License>
-    <GettingStartedGuide>https://github.com/JohanLarsson/KillWpfDesigner</GettingStartedGuide>
-    <Icon>Resources\KillDesignerCommandPackage.ico</Icon>
-    <PreviewImage>Resources\Preview.png</PreviewImage>
-    <Tags>WPF Designer</Tags>
-  </Metadata>
+    <Metadata>
+        <Identity Id="KillWpfDesigner..4e540e33-6c61-4c69-aec2-976163a31af4" Version="1.0.4" Language="en-US" Publisher="Johan Larsson" />
+        <DisplayName>Kill the WPF Designer</DisplayName>
+        <Description xml:space="preserve">Helper for killing the WPF designer. Kills all instances of XDesProc.exe.</Description>
+        <License>Resources\LICENSE</License>
+        <GettingStartedGuide>https://github.com/JohanLarsson/KillWpfDesigner</GettingStartedGuide>
+        <Icon>Resources\KillDesignerCommandPackage.ico</Icon>
+        <PreviewImage>Resources\Preview.png</PreviewImage>
+        <Tags>WPF Designer</Tags>
+    </Metadata>
 
-  <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,17.0)" />
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0,17.0)" />
-  </Installation>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[14.0,17.0)" />
+        <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[14.0,17.0)" />
+    </Installation>
 
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.ManagedDesktop.Prerequisites" Version="[14.0,)" DisplayName=".NET desktop development tools" />
-  </Prerequisites>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.ManagedDesktop.Prerequisites" Version="[14.0,)" DisplayName=".NET desktop development tools" />
+    </Prerequisites>
 
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-  </Assets>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    </Assets>
 </PackageManifest>
