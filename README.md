@@ -1,4 +1,7 @@
 # Kill WPF Designer
+
+[![Build Status](https://dev.azure.com/johan-larsson/KillWpfDesigner/_apis/build/status/KillWpfDesigner-CI?branchName=master)](https://dev.azure.com/johan-larsson/KillWpfDesigner/_build/latest?definitionId=2&branchName=master)
+
 A Visual Studio extension for killing the WPF designer processes.
 Kills all instances of XDesProc.exe
 
