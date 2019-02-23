@@ -56,6 +56,7 @@
         protected override void Initialize()
         {
             _ = new KillDesignerCommand(this);
+            _ = new CleanShadowCacheCommand(this);
             this.killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
             base.Initialize();
         }

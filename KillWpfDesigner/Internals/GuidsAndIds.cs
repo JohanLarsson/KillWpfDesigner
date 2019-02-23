@@ -17,5 +17,6 @@
 
         public static readonly CommandID KillDesignerCommandId = new CommandID(CommandSet, 1);
         public static readonly CommandID KillDesignerAndRebuildSolutionCommandId = new CommandID(CommandSet, 2);
+        public static readonly CommandID CleanShadowCacheCommandId = new CommandID(CommandSet, 3);
     }
 }

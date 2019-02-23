@@ -7,18 +7,12 @@
     internal sealed class KillDesignerCommand
     {
         /// <summary>
-        /// VS Package that provides this command, not null.
-        /// </summary>
-        private readonly Package package;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         internal KillDesignerCommand(Package package)
         {
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
             package.GetService<IMenuCommandService>()?.AddCommand(new MenuCommand(this.Execute, GuidsAndIds.KillDesignerCommandId));
         }
 

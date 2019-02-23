@@ -44,9 +44,6 @@
           If you do not want an image next to your command, remove the Icon node /> -->
       <Button guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" type="Button">
         <Icon guid="guidImages" id="skull" />
-        <CommandFlag>AllowVisibilityChangeOnToolBar</CommandFlag>
-        <CommandFlag>DefaultInvisible</CommandFlag>
-        <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <ButtonText>Kill the WPF Designer</ButtonText>
         </Strings>
@@ -58,6 +55,12 @@
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <ButtonText>Kill Designer and Rebuild Solution</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidKillDesignerCommandPackageCmdSet" id="CleanShadowCacheCommandId" type="Button">
+        <Strings>
+          <ButtonText>Clean shadow cache</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -82,6 +85,10 @@
       <Parent guid="guidSHLMainMenu" id="IDG_VS_BUILD_SOLUTION"/>
     </CommandPlacement>
 
+    <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="CleanShadowCacheCommandId" priority="0x0201">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_BUILD_SOLUTION"/>
+    </CommandPlacement>
+
     <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerAndRebuildSolutionCommandId" priority="0x0201">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_SOLUTION_BUILD"/>
     </CommandPlacement>
@@ -95,6 +102,7 @@
     <GuidSymbol name="guidKillDesignerCommandPackageCmdSet" value="{e72de556-6b14-45d5-a92f-86185351617b}">
       <IDSymbol name="KillDesignerCommandId" value="1" />
       <IDSymbol name="KillDesignerAndRebuildSolutionCommandId" value="2" />
+      <IDSymbol name="CleanShadowCacheCommandId" value="3" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{19601113-d97f-4ac6-a1f7-844c4d0697ea}" >
