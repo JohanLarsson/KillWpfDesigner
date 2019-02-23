@@ -22,7 +22,7 @@
         /// <param name="package">Owner package, not null.</param>
         internal KillDesignerCommand(Package package)
         {
-            this.package = package ?? throw new ArgumentNullException("package");
+            this.package = package ?? throw new ArgumentNullException(nameof(package));
             var commandService = this.GetService<IMenuCommandService>();
             if (commandService != null)
             {

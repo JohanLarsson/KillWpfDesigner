@@ -25,7 +25,7 @@
         /// <param name="package">Owner package, not null.</param>
         internal KillDesignerAndRebuildSolutionCommand(Package package)
         {
-            this.package = package ?? throw new ArgumentNullException("package");
+            this.package = package ?? throw new ArgumentNullException(nameof(package));
             var commandService = this.GetService<IMenuCommandService>();
             if (commandService != null)
             {
