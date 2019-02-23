@@ -2,18 +2,14 @@
 {
     using System;
     using System.ComponentModel.Design;
-
-    using EnvDTE;
-
     using Microsoft.VisualStudio.Shell;
 
-    internal sealed class KillDesignerCommand : IDisposable
+    internal sealed class KillDesignerCommand
     {
         /// <summary>
         /// VS Package that provides this command, not null.
         /// </summary>
         private readonly Package package;
-        private readonly MenuCommand menuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KillDesignerCommand"/> class.
@@ -23,30 +19,7 @@
         internal KillDesignerCommand(Package package)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
-            var commandService = this.GetService<IMenuCommandService>();
-            if (commandService != null)
-            {
-                this.menuItem = new MenuCommand(this.Execute, GuidsAndIds.KillDesignerCommandId);
-                this.UpdateVisibility();
-                commandService.AddCommand(this.menuItem);
-
-                var service = this.GetService<DTE>();
-                service.Events.SolutionEvents.AfterClosing += this.UpdateVisibility;
-                service.Events.SolutionEvents.Opened += this.UpdateVisibility;
-            }
-        }
-
-        public T GetService<T>()
-            where T : class
-        {
-            return this.package.GetService<T>();
-        }
-
-        public void Dispose()
-        {
-            var dte = this.GetService<DTE>();
-            dte.Events.SolutionEvents.AfterClosing -= this.UpdateVisibility;
-            dte.Events.SolutionEvents.Opened -= this.UpdateVisibility;
+            package.GetService<IMenuCommandService>()?.AddCommand(new MenuCommand(this.Execute, GuidsAndIds.KillDesignerCommandId));
         }
 
         /// <summary>
@@ -59,11 +32,6 @@
         private void Execute(object sender, EventArgs e)
         {
             WpfDesigner.KillAll();
-        }
-
-        private void UpdateVisibility()
-        {
-            this.menuItem.Visible = this.package.HasOpenWpfSolution();
         }
     }
 }

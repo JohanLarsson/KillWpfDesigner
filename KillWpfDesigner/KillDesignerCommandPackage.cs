@@ -31,7 +31,6 @@
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     public sealed class KillDesignerCommandPackage : Package, IDisposable
     {
-        private KillDesignerCommand killDesignerCommand;
         private KillDesignerAndRebuildSolutionCommand killDesignerAndRebuildSolutionCommand;
 
         /// <summary>
@@ -47,7 +46,6 @@
 
         public void Dispose()
         {
-            this.killDesignerCommand?.Dispose();
             this.killDesignerAndRebuildSolutionCommand?.Dispose();
         }
 
@@ -57,7 +55,7 @@
         /// </summary>
         protected override void Initialize()
         {
-            this.killDesignerCommand = new KillDesignerCommand(this);
+            _ = new KillDesignerCommand(this);
             this.killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
             base.Initialize();
         }
