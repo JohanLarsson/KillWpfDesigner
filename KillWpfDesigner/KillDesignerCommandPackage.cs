@@ -57,6 +57,7 @@
         {
             _ = new KillDesignerCommand(this);
             _ = new CleanShadowCacheCommand(this);
+            _ = new CleanBinAndObjCommand(this);
             this.killDesignerAndRebuildSolutionCommand = new KillDesignerAndRebuildSolutionCommand(this);
             base.Initialize();
         }

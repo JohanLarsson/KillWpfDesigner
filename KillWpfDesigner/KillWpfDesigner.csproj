@@ -79,6 +79,7 @@
     <CodeAnalysisRuleSet>KillWpfDesigner.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CleanBinAndObjCommand.cs" />
     <Compile Include="CleanShadowCacheCommand.cs" />
     <Compile Include="Internals\GuidsAndIds.cs" />
     <Compile Include="Internals\WpfDesigner.cs" />

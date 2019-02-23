@@ -30,24 +30,17 @@
             if (commandService != null)
             {
                 this.menuItem = new MenuCommand(this.Execute, GuidsAndIds.KillDesignerAndRebuildSolutionCommandId);
-                this.UpdateVisibility();
                 commandService.AddCommand(this.menuItem);
 
                 var dte = this.GetService<DTE>();
                 this.rebuildSlnEvents = dte.Events.CommandEvents[GuidVsStandardCommandSet97, (int)VSConstants.VSStd97CmdID.RebuildSln];
                 this.rebuildSlnEvents.BeforeExecute += this.OnBeforeExecuteRebuildSln;
                 this.rebuildSlnEvents.AfterExecute += this.OnAfterExecuteRebuildSln;
-
-                dte.Events.SolutionEvents.AfterClosing += this.UpdateVisibility;
-                dte.Events.SolutionEvents.Opened += this.UpdateVisibility;
             }
         }
 
         public void Dispose()
         {
-            var dte = this.GetService<DTE>();
-            dte.Events.SolutionEvents.AfterClosing -= this.UpdateVisibility;
-            dte.Events.SolutionEvents.Opened -= this.UpdateVisibility;
             this.rebuildSlnEvents.BeforeExecute -= this.OnBeforeExecuteRebuildSln;
             this.rebuildSlnEvents.AfterExecute -= this.OnAfterExecuteRebuildSln;
         }
@@ -64,11 +57,6 @@
             WpfDesigner.KillAll();
             var dte = this.GetService<DTE>();
             dte.ExecuteCommand("Build.RebuildSolution");
-        }
-
-        private void UpdateVisibility()
-        {
-            this.menuItem.Visible = this.package.HasOpenWpfSolution();
         }
 
         private void OnBeforeExecuteRebuildSln(string guid, int id, object customIn, object customOut, ref bool cancelDefault)

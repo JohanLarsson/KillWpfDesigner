@@ -44,6 +44,8 @@
           If you do not want an image next to your command, remove the Icon node /> -->
       <Button guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" type="Button">
         <Icon guid="guidImages" id="skull" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
           <ButtonText>Kill the WPF Designer</ButtonText>
         </Strings>
@@ -63,6 +65,14 @@
           <ButtonText>Clean shadow cache</ButtonText>
         </Strings>
       </Button>
+
+      <Button guid="guidKillDesignerCommandPackageCmdSet" id="CleanBinAndObjCommandId" type="Button">
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Clean bin and obj</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -76,12 +86,22 @@
     </Bitmaps>
   </Commands>
 
+  <VisibilityConstraints>
+    <VisibilityItem guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerAndRebuildSolutionCommandId" context="UICONTEXT_SolutionExistsAndNotBuildingAndNotDebugging" />
+    <VisibilityItem guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" context="UICONTEXT_SolutionExistsAndNotBuildingAndNotDebugging" />
+    <VisibilityItem guid="guidKillDesignerCommandPackageCmdSet" id="CleanBinAndObjCommandId" context="UICONTEXT_SolutionExists" />
+  </VisibilityConstraints>
+
   <CommandPlacements>
     <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerCommandId" priority="0x0601">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_TOOLSB_RUNBUILD"/>
     </CommandPlacement>
 
     <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="KillDesignerAndRebuildSolutionCommandId" priority="0x0201">
+      <Parent guid="guidSHLMainMenu" id="IDG_VS_BUILD_SOLUTION"/>
+    </CommandPlacement>
+
+    <CommandPlacement guid="guidKillDesignerCommandPackageCmdSet" id="CleanBinAndObjCommandId" priority="0x0201">
       <Parent guid="guidSHLMainMenu" id="IDG_VS_BUILD_SOLUTION"/>
     </CommandPlacement>
 
@@ -103,6 +123,7 @@
       <IDSymbol name="KillDesignerCommandId" value="1" />
       <IDSymbol name="KillDesignerAndRebuildSolutionCommandId" value="2" />
       <IDSymbol name="CleanShadowCacheCommandId" value="3" />
+      <IDSymbol name="CleanBinAndObjCommandId" value="4" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{19601113-d97f-4ac6-a1f7-844c4d0697ea}" >
