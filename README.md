@@ -10,7 +10,7 @@ Install it [here](https://marketplace.visualstudio.com/items?itemName=Johan20D.K
 
 ![image](https://user-images.githubusercontent.com/1640096/53286585-1e423b80-3771-11e9-96a9-a0c3d2f0c992.png)
 
-## How to update on market place
+## How to update on Marketplace
 1. Build release
 2. Go to https://marketplace.visualstudio.com/manage/publishers/johan20d
 
