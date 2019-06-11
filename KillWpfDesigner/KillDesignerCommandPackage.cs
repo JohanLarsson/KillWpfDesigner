@@ -41,10 +41,10 @@
         protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await base.InitializeAsync(cancellationToken, progress);
-            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             var mcs = (IMenuCommandService)await this.GetServiceAsync(typeof(IMenuCommandService));
-            mcs.AddCommand(new MenuCommand((_, __) => KillAllDesigners(), GuidsAndIds.KillDesignerCommandId));
             var dte = (DTE)await this.GetServiceAsync(typeof(DTE));
+            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            mcs.AddCommand(new MenuCommand((_, __) => KillAllDesigners(), GuidsAndIds.KillDesignerCommandId));
             mcs.AddCommand(new MenuCommand((_, __) => KillAndRebuild(dte), GuidsAndIds.KillDesignerAndRebuildSolutionCommandId));
             mcs.AddCommand(new MenuCommand((_, __) => CleanBinAndObj(dte), GuidsAndIds.CleanBinAndObjCommandId));
             var shadowCacheDirectory = Path.Combine(this.UserLocalDataPath, "Designer", "ShadowCache");
