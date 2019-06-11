@@ -7,7 +7,7 @@
     <Description>Adds the Kill the WPF Designer command button to Visual Studio.</Description>
     <Company>Johan Larsson</Company>
     <Copyright>Copyright © Johan Larsson 2017</Copyright>
-    <Version>1.1.0.0</Version>
+    <Version>1.1.1.0</Version>
     <FileVersion>1.1.0.0</FileVersion>
 
     <GeneratePkgDefFile>true</GeneratePkgDefFile>
@@ -18,12 +18,12 @@
     <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
     <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
   </PropertyGroup>
-  
+
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
     <!-- This property disables extension deployment for command line builds; required for AppVeyor -->
     <DeployExtension>False</DeployExtension>
@@ -31,7 +31,7 @@
     <!-- Ideally this is always enabled, but that tends to hurt developer productivity -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
@@ -41,31 +41,31 @@
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="15.1.192" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Shell.14.0" Version="14.0.23205" />
     <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.10.0" Version="10.0.30319" />
     <PackageReference Include="EnvDTE" Version="8.0.1" />
-	  <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Content Include="Resources\Preview.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-	
+
     <Content Include="Resources\skull.svg" />
-    
-	<Content Include="..\LICENSE">
+
+    <Content Include="..\LICENSE">
       <Link>Resources\LICENSE</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    
-	<None Include="source.extension.vsixmanifest" />
+
+    <None Include="source.extension.vsixmanifest" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <VSCTCompile Include="KillDesignerCommandPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
@@ -81,15 +81,15 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Update="VSPackage.resx">
       <LogicalName>VSPackage.resources</LogicalName>
       <MergeWithCTO>true</MergeWithCTO>
     </EmbeddedResource>
   </ItemGroup>
-  
+
   <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
 
-  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />  
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="Exists('$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets')" />
 </Project>
