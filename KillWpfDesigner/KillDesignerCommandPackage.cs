@@ -8,9 +8,6 @@
     using System.Threading;
     using EnvDTE;
     using Microsoft.VisualStudio.Shell;
-    using Microsoft.VisualStudio.Shell.Interop;
-    using Process = System.Diagnostics.Process;
-    using Task = System.Threading.Tasks.Task;
 
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -41,7 +38,7 @@
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
         /// </summary>
-        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await base.InitializeAsync(cancellationToken, progress);
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
@@ -56,7 +53,7 @@
 
         private static void KillAllDesigners()
         {
-            var designers = Process.GetProcessesByName("XDesProc");
+            var designers = System.Diagnostics.Process.GetProcessesByName("XDesProc");
             foreach (var designer in designers)
             {
                 designer.Kill();
