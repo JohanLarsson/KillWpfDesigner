@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KillWpfDesigner", "KillWpfDesigner\KillWpfDesigner.csproj", "{92CC0EEF-B98B-45C3-A3F4-98960EA13582}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KillWpfDesigner", "KillWpfDesigner\KillWpfDesigner.csproj", "{92CC0EEF-B98B-45C3-A3F4-98960EA13582}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B0DBDB1-36AC-4950-B6F1-32B41BC57B28}
 	EndGlobalSection
 EndGlobal
