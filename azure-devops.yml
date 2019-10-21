@@ -1,25 +1,30 @@
+trigger:
+- master
 
-resources:
-- repo: self
-queue:
-  name: Hosted VS2017
-  demands: 
-  - msbuild
-  - visualstudio
-  - vstest
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
 
 steps:
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.4.1'
-  inputs:
-    versionSpec: 4.4.1
+- task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
-  displayName: 'NuGet restore'
+  inputs:
+    restoreSolution: '$(solution)'
 
 - task: VSBuild@1
-  displayName: 'Build'
   inputs:
-    configuration: Release
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 
