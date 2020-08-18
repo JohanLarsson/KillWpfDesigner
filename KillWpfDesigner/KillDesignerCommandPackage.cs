@@ -105,7 +105,14 @@
             {
                 foreach (var file in Directory.EnumerateFiles(dir))
                 {
-                    File.Delete(file);
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch
+                    {
+                        // swallowing here, could be that the file was in use or something else that I don't know how to check.
+                    }
                 }
 
                 foreach (var subDir in Directory.EnumerateDirectories(dir))
@@ -113,7 +120,14 @@
                     DeleteRecursively(subDir);
                 }
 
-                Directory.Delete(dir, recursive: true);
+                try
+                {
+                    Directory.Delete(dir, recursive: true);
+                }
+                catch
+                {
+                    // swallowing here, could be that a file was in use or something else that I don't know how to check.
+                }
             }
         }
     }
