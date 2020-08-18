@@ -58,6 +58,12 @@
             {
                 designer.Kill();
             }
+
+            designers = System.Diagnostics.Process.GetProcessesByName("WpfSurface");
+            foreach (var designer in designers)
+            {
+                designer.Kill();
+            }
         }
 
         private static void CleanBinAndObj(DTE dte)
