@@ -6,7 +6,9 @@
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Threading;
+
     using EnvDTE;
+
     using Microsoft.VisualStudio.Shell;
 
     /// <summary>
@@ -68,16 +70,14 @@
 
         private static void CleanBinAndObj(DTE dte)
         {
-            if (dte.ActiveSolutionProjects is Array projects)
+            foreach (var o in dte.Solution.Projects)
             {
-                foreach (var o in projects)
+                if (o is Project { FileName: { } fileName } &&
+                    fileName != string.Empty &&
+                    Path.GetDirectoryName(fileName) is { } projectDir)
                 {
-                    if (o is Project project &&
-                        Path.GetDirectoryName(project.FullName) is string projectDir)
-                    {
-                        DeleteRecursively(Path.Combine(projectDir, "bin"));
-                        DeleteRecursively(Path.Combine(projectDir, "obj"));
-                    }
+                    DeleteRecursively(Path.Combine(projectDir, "bin"));
+                    DeleteRecursively(Path.Combine(projectDir, "obj"));
                 }
             }
         }
