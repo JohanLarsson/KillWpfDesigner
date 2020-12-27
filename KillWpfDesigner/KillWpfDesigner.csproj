@@ -40,7 +40,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Shell.14.0" Version="14.3.25407" />
     <PackageReference Include="Microsoft.VisualStudio.Shell.Interop.10.0" Version="16.7.30328.74" />
     <PackageReference Include="EnvDTE" Version="16.7.30508.193" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.312" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
